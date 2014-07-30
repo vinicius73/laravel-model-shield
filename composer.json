@@ -11,7 +11,7 @@
         "kennedytedesco/validation": "dev-master"
     },
     "require-dev": {
-        "zizaco/factory-muff": "dev-master",
+        "zizaco/factory-muff": "dev-master"
     },
     "autoload": {
         "psr-0": {
