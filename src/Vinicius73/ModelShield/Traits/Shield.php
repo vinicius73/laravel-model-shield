@@ -1,5 +1,6 @@
 <?php namespace Vinicius73\ModelShield\Traits;
 
+use App;
 use Illuminate\Support\MessageBag;
 use Validator;
 
@@ -9,6 +10,8 @@ trait Shield
     * @var \Illuminate\Support\MessageBag
     */
    protected $validationErrors;
+
+   private $rules;
 
    /**
     * @return bool
@@ -25,13 +28,14 @@ trait Shield
     */
    public function getRules()
    {
-      $rulesUpdate = self::rulesUpdate();
+      if (!is_array($this->rules)):
+         $manager = App::make('shield');
+         $key = $this->getRulesKey();
 
-      if ($this->exists and !empty($rulesUpdate)):
-         return $rulesUpdate;
+         $this->rules = ($this->exists) ? $manager->getRulesUpdating($key) : $manager->getRulesCreating($key);
       endif;
 
-      return self::rules();
+      return $this->rules;
    }
 
    /**
@@ -101,18 +105,14 @@ trait Shield
    }
 
    /**
-    * @return array
+    * @return mixed
     */
-   public static function rules()
+   protected function getRulesKey()
    {
-      return (isset(self::$rules)) ? self::$rules : [];
-   }
+      if (isset($this->_rules_key)):
+         return $this->_rules_key;
+      endif;
 
-   /**
-    * @return array
-    */
-   public static function rulesUpdate()
-   {
-      return (isset(self::$rulesUpdate)) ? self::$rulesUpdate : [];
+      return $this->table;
    }
 }
