@@ -1,5 +1,7 @@
 # Laravel Model Shield
 
+[![Latest Stable Version](https://poser.pugx.org/vinicius73/laravel-model-shield/v/stable.svg)](https://packagist.org/packages/vinicius73/laravel-model-shield) [![Total Downloads](https://poser.pugx.org/vinicius73/laravel-model-shield/downloads.svg)](https://packagist.org/packages/vinicius73/laravel-model-shield) [![Latest Unstable Version](https://poser.pugx.org/vinicius73/laravel-model-shield/v/unstable.svg)](https://packagist.org/packages/vinicius73/laravel-model-shield) [![License](https://poser.pugx.org/vinicius73/laravel-model-shield/license.svg)](https://packagist.org/packages/vinicius73/laravel-model-shield)
+
 ## installation
 
 Add the new required package in your composer.json

@@ -1,6 +1,8 @@
 {
     "name": "vinicius73/laravel-model-shield",
     "description": "Validation package for models Laravel 4.*",
+    "keywords": ["model", "validation", "validator", "database"],
+    "license": "MIT",
     "authors": [{
         "name": "Vinicius Reis",
         "email": "luiz.vinicius73@gmail.com"
