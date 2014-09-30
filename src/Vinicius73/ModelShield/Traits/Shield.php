@@ -10,10 +10,19 @@ trait Shield
     * @var \Illuminate\Support\MessageBag
     */
    protected $validationErrors;
+
+   /**
+    * @var \Illuminate\Validation\Validator
+    */
+   private $validator;
    /**
     * @var array
     */
    private $rules;
+   /**
+    * @var array
+    */
+   private $customMessages;
 
    /**
     * @param array $customRules
@@ -40,6 +49,21 @@ trait Shield
       endif;
 
       return $this->rules;
+   }
+
+   /**
+    * @return array
+    */
+   public function getCustomMessages()
+   {
+      if (!is_array($this->customMessages)):
+         $manager = App::make('shield');
+         $key = $this->getRulesKey();
+
+         $this->customMessages = $manager->getCustomMessages($key);
+      endif;
+
+      return $this->customMessages;
    }
 
    /**
@@ -75,22 +99,50 @@ trait Shield
     * Validates the model
     *
     * @param array $customRules
+    * @param array $customMessages
     *
     * @return bool
     */
-   protected function validate(array $customRules = array())
+   protected function validate(array $customRules = array(), array $customMessages = array())
    {
       $rules = (empty($customRules)) ? $this->getRules() : $customRules;
+      $messages = (empty($customMessages)) ? $this->getCustomMessages() : $customMessages;
       $attributes = $this->prepareAttributes();
-      $validator = Validator::make($attributes, $rules);
 
-      $success = $validator->passes();
+      $this->validator = $this->makeValidator($attributes, $rules, $messages);
+
+      $success = $this->validator->passes();
 
       if (!$success):
-         $this->setErrors($validator->errors());
+         $this->setErrors($this->validator->errors());
       endif;
 
       return $success;
+   }
+
+   /**
+    * @param array $attributes
+    * @param array $rules
+    * @param array $messages
+    * @param array $customAttributes
+    *
+    * @return \Illuminate\Validation\Validator
+    */
+   protected function makeValidator(array $attributes, array $rules, array $messages = array(), array $customAttributes = array())
+   {
+      return Validator::make($attributes, $rules, $messages, $customAttributes);
+   }
+
+   /**
+    * @return \Illuminate\Validation\Validator
+    */
+   public function getValidator()
+   {
+      if (is_null($this->validator)):
+         $this->validate();
+      endif;
+
+      return $this->validator;
    }
 
    /**

@@ -118,4 +118,16 @@ class Manager
 
         return array_merge($default, $updating);
     }
+
+   /**
+    * @param $key
+    *
+    * @return mixed
+    */
+   public function getCustomMessages($key)
+   {
+      $rules = $this->loadRules($key);
+
+      return array_get($rules, 'custom_messages', []);
+   }
 }
