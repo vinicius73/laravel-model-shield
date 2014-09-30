@@ -23,6 +23,10 @@ trait Shield
     * @var array
     */
    private $customMessages;
+   /**
+    * @var array
+    */
+   private $attributesNames;
 
    /**
     * @param array $customRules
@@ -67,6 +71,21 @@ trait Shield
    }
 
    /**
+    * @return array
+    */
+   public function getAttributeNames()
+   {
+      if (!is_array($this->attributesNames)):
+         $manager = App::make('shield');
+         $key = $this->getRulesKey();
+
+         $this->attributesNames = $manager->getAttributeNames($key);
+      endif;
+
+      return $this->attributesNames;
+   }
+
+   /**
     * @param array $options
     * @param array $customRules
     *
@@ -100,16 +119,21 @@ trait Shield
     *
     * @param array $customRules
     * @param array $customMessages
+    * @param array $attributeNames
     *
     * @return bool
     */
-   protected function validate(array $customRules = array(), array $customMessages = array())
+   protected function validate(array $customRules = array(), array $customMessages = array(), array $attributeNames = array())
    {
       $rules = (empty($customRules)) ? $this->getRules() : $customRules;
       $messages = (empty($customMessages)) ? $this->getCustomMessages() : $customMessages;
+      $attributeNames = (empty($attributeNames)) ? $this->getAttributeNames() : $attributeNames;
+
       $attributes = $this->prepareAttributes();
 
       $this->validator = $this->makeValidator($attributes, $rules, $messages);
+
+      $this->validator->setAttributeNames($attributeNames);
 
       $success = $this->validator->passes();
 

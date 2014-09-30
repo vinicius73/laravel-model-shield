@@ -122,12 +122,24 @@ class Manager
    /**
     * @param $key
     *
-    * @return mixed
+    * @return array
     */
    public function getCustomMessages($key)
    {
       $rules = $this->loadRules($key);
 
       return array_get($rules, 'custom_messages', []);
+   }
+
+   /**
+    * @param $key
+    *
+    * @return array
+    */
+   public function getAttributeNames($key)
+   {
+      $rules = $this->loadRules($key);
+
+      return array_get($rules, 'attribute_names', []);
    }
 }
