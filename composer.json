@@ -1,6 +1,6 @@
 {
     "name": "vinicius73/laravel-model-shield",
-    "description": "Validation package for models Laravel 4.1",
+    "description": "Validation package for models Laravel 4.*",
     "authors": [{
         "name": "Vinicius Reis",
         "email": "luiz.vinicius73@gmail.com"
@@ -8,10 +8,14 @@
     "require": {
         "php": ">=5.4.0",
         "illuminate/database": "4.*",
-        "kennedytedesco/validation": "dev-master"
+        "illuminate/validation": "4.*",
+        "illuminate/support": "4.*"
     },
     "require-dev": {
         "zizaco/factory-muff": "dev-master"
+    },
+    "suggest": {
+        "kennedytedesco/validation": "Give more power to your validator."
     },
     "autoload": {
         "psr-0": {

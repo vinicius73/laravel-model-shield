@@ -10,15 +10,19 @@ trait Shield
     * @var \Illuminate\Support\MessageBag
     */
    protected $validationErrors;
-
+   /**
+    * @var array
+    */
    private $rules;
 
    /**
+    * @param array $customRules
+    *
     * @return bool
     */
-   public function isValid()
+   public function isValid(array $customRules = array())
    {
-      return (boolean)$this->validate();
+      return (boolean)$this->validate($customRules);
    }
 
    /**
@@ -40,12 +44,13 @@ trait Shield
 
    /**
     * @param array $options
+    * @param array $customRules
     *
     * @return bool
     */
-   public function save(array $options = array())
+   public function save(array $options = array(), array $customRules = array())
    {
-      $isValid = $this->isValid();
+      $isValid = $this->isValid($customRules);
 
       if ($isValid):
          return parent::save($options);
@@ -55,15 +60,30 @@ trait Shield
    }
 
    /**
+    * @param array $options
+    *
+    * @return mixed
+    */
+   public function forceSave(array $options = array())
+   {
+      $this->validate();
+
+      return parent::save($options);
+   }
+
+   /**
     * Validates the model
+    *
+    * @param array $customRules
     *
     * @return bool
     */
-   protected function validate()
+   protected function validate(array $customRules = array())
    {
-      $rules = $this->getRules();
+      $rules = (empty($customRules)) ? $this->getRules() : $customRules;
       $attributes = $this->prepareAttributes();
       $validator = Validator::make($attributes, $rules);
+
       $success = $validator->passes();
 
       if (!$success):
