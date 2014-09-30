@@ -113,6 +113,6 @@ trait Shield
          return $this->_rules_key;
       endif;
 
-      return $this->table;
+      return $this->getTable();
    }
 }
