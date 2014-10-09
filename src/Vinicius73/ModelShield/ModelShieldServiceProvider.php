@@ -20,7 +20,6 @@ class ModelShieldServiceProvider extends ServiceProvider
    public function boot()
    {
       $this->package('vinicius73/laravel-model-shield', 'Shield');
-      $this->app->register('KennedyTedesco\Validation\ValidationServiceProvider');
    }
 
    /**
