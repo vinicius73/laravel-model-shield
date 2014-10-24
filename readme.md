@@ -7,7 +7,7 @@
 Add the new required package in your composer.json
 
 ```
-"vinicius73/laravel-model-shield": "~1.0"
+"vinicius73/laravel-model-shield": "~1.1"
 ```
 
 Run `composer update` or `php composer.phar update`.
@@ -49,6 +49,19 @@ class Student extends Eloquent
    use Shield;
 
    protected $table = 'students';
+}
+```
+
+## Usage in Sentry
+Use:
+
+```php
+use Cartalyst\Sentry\Users\Eloquent\User as SentryModel;
+use Vinicius73\ModelShield\Traits\ShieldSentry;
+
+class User extends SentryModel
+{
+   use ShieldSentry;
 }
 ```
 
