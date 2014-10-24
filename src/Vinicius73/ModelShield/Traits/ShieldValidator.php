@@ -1,7 +1,5 @@
 <?php namespace Vinicius73\ModelShield\Traits;
 
-use App;
-use Illuminate\Support\MessageBag;
 use Validator;
 
 trait ShieldValidator
@@ -12,6 +10,16 @@ trait ShieldValidator
    private $validator;
 
    /**
+    * @param array $customRules
+    *
+    * @return bool
+    */
+   public function isValid(array $customRules = array())
+   {
+      return (boolean)$this->runValidation($customRules);
+   }
+
+   /**
     * Validates the model
     *
     * @param array $customRules
@@ -20,7 +28,7 @@ trait ShieldValidator
     *
     * @return bool
     */
-   protected function validate(array $customRules = array(), array $customMessages = array(), array $attributeNames = array())
+   protected function runValidation(array $customRules = array(), array $customMessages = array(), array $attributeNames = array())
    {
       $rules          = (empty($customRules)) ? $this->getRules() : $customRules;
       $messages       = (empty($customMessages)) ? $this->getCustomMessages() : $customMessages;

@@ -7,16 +7,6 @@ trait Shield
    use ShieldValidator;
 
    /**
-    * @param array $customRules
-    *
-    * @return bool
-    */
-   public function isValid(array $customRules = array())
-   {
-      return (boolean)$this->validate($customRules);
-   }
-
-   /**
     * @param array $options
     * @param array $customRules
     *
@@ -40,8 +30,6 @@ trait Shield
     */
    public function forceSave(array $options = array())
    {
-      $this->validate();
-
       return parent::save($options);
    }
 }
