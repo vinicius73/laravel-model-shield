@@ -1,6 +1,6 @@
 {
     "name": "vinicius73/laravel-model-shield",
-    "description": "Validation package for models Laravel 4.*",
+    "description": "Validation package for models Laravel 5+",
     "keywords": ["model", "validation", "validator", "database"],
     "license": "MIT",
     "authors": [{
@@ -9,18 +9,15 @@
     }],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/database": "4.*",
-        "illuminate/validation": "4.*",
-        "illuminate/support": "4.*"
-    },
-    "require-dev": {
-        "zizaco/factory-muff": "dev-master"
+        "illuminate/database": "~5",
+        "illuminate/validation": "~5",
+        "illuminate/support": "~5"
     },
     "suggest": {
         "kennedytedesco/validation": "Give more power to your validator."
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Vinicius73\\ModelShield\\": "src/"
         }
     },

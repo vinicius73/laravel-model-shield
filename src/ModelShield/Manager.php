@@ -1,60 +1,54 @@
 <?php namespace Vinicius73\ModelShield;
 
-use Config;
 use Illuminate\Support\Collection;
 
 class Manager
 {
     /**
+     * @var string
+     */
+    private $path;
+
+    /**
      * @var Collection
      */
-    private $config;
     private $rules;
-    private $nameSpace = 'ShieldRules';
 
     public function __construct(array $config)
     {
-        $this->config = Collection::make($config);
-        $this->rules = Collection::make([]);
-
-        $this->doConfiguration();
+        $this->path = array_get( $config, 'path');
+        $this->rules = new Collection();
     }
 
-    /**
-     * init Configuration
-     *
-     * @return void
-     */
-    private function doConfiguration()
-    {
-        $path = $this->config->get('path');
-
-        if (empty($path)):
-            $path = app_path('models/rules'); // models/rules;
-        endif;
-
-        Config::addNamespace($this->nameSpace, $path);
-    }
-
-
-    /**
+     /**
      * @param string $key
      *
      * @return array
      */
-    public function loadRules($key)
+    protected function loadRules($key)
     {
         if (!$this->rules->has($key)):
-            $configName = $this->nameSpace . '::' . $key;
-
-            $config = Config::get($configName, []);
-
-            $this->rules->put($key, $config);
+            $this->rules->put($key, $this->loadRulesFromFile($key));
         endif;
 
         return $this->rules->get($key);
     }
 
+    /**
+     * @param $key
+     *
+     * @return array
+     */
+    protected function loadRulesFromFile($key)
+    {
+        $file = $this->path . $key . '.php';
+
+        /**
+         * @TODO make Exception
+         */
+
+        return include $file;
+    }
 
     /**
      * @param string $key
