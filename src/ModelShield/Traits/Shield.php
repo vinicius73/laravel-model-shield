@@ -1,10 +1,12 @@
-<?php namespace Vinicius73\ModelShield\Traits;
+<?php
+
+namespace Vinicius73\ModelShield\Traits;
 
 trait Shield
 {
-   use Rules;
-   use Messages;
-   use ShieldValidator;
+    use Rules;
+    use Messages;
+    use ShieldValidator;
 
    /**
     * @param array $options
@@ -12,15 +14,15 @@ trait Shield
     *
     * @return bool
     */
-   public function save(array $options = array(), array $customRules = array())
+   public function save(array $options = [], array $customRules = [])
    {
-      $isValid = $this->isValid($customRules);
+       $isValid = $this->isValid($customRules);
 
-      if ($isValid):
+       if ($isValid):
          return parent::save($options);
-      endif;
+       endif;
 
-      return false;
+       return false;
    }
 
    /**
@@ -28,8 +30,8 @@ trait Shield
     *
     * @return mixed
     */
-   public function forceSave(array $options = array())
+   public function forceSave(array $options = [])
    {
-      return parent::save($options);
+       return parent::save($options);
    }
 }

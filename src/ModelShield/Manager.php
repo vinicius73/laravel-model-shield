@@ -1,4 +1,6 @@
-<?php namespace Vinicius73\ModelShield;
+<?php
+
+namespace Vinicius73\ModelShield;
 
 use Illuminate\Support\Collection;
 
@@ -16,11 +18,11 @@ class Manager
 
     public function __construct(array $config)
     {
-        $this->path = array_get( $config, 'path');
+        $this->path = array_get($config, 'path');
         $this->rules = new Collection();
     }
 
-     /**
+    /**
      * @param string $key
      *
      * @return array
@@ -41,9 +43,9 @@ class Manager
      */
     protected function loadRulesFromFile($key)
     {
-        $file = $this->path . $key . '.php';
+        $file = $this->path.$key.'.php';
 
-        /**
+        /*
          * @TODO make Exception
          */
 
@@ -61,13 +63,13 @@ class Manager
         switch ($creating):
             case true:
                 return $this->getRulesCreating($key);
-                break;
-            case false:
+        break;
+        case false:
                 return $this->getRulesUpdating($key);
-                break;
-            default:
+        break;
+        default:
                 return [];
-                break;
+        break;
         endswitch;
     }
 
@@ -120,9 +122,9 @@ class Manager
     */
    public function getCustomMessages($key)
    {
-      $rules = $this->loadRules($key);
+       $rules = $this->loadRules($key);
 
-      return array_get($rules, 'custom_messages', []);
+       return array_get($rules, 'custom_messages', []);
    }
 
    /**
@@ -132,8 +134,8 @@ class Manager
     */
    public function getAttributeNames($key)
    {
-      $rules = $this->loadRules($key);
+       $rules = $this->loadRules($key);
 
-      return array_get($rules, 'attribute_names', []);
+       return array_get($rules, 'attribute_names', []);
    }
 }

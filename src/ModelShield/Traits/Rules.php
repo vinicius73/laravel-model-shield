@@ -1,10 +1,12 @@
-<?php namespace Vinicius73\ModelShield\Traits;
+<?php
+
+namespace Vinicius73\ModelShield\Traits;
 
 use App;
 
 trait Rules
 {
-   /**
+    /**
     * @var array
     */
    private $rules;
@@ -18,20 +20,20 @@ trait Rules
    private $attributesNames;
 
    /**
-    * Provides validation rules
+    * Provides validation rules.
     *
     * @return array
     */
    public function getRules()
    {
-      if (!is_array($this->rules)):
+       if (!is_array($this->rules)):
          $manager = App::make('shield');
-         $key     = $this->getRulesKey();
+       $key = $this->getRulesKey();
 
-         $this->rules = ($this->exists) ? $manager->getRulesUpdating($key) : $manager->getRulesCreating($key);
-      endif;
+       $this->rules = ($this->exists) ? $manager->getRulesUpdating($key) : $manager->getRulesCreating($key);
+       endif;
 
-      return $this->rules;
+       return $this->rules;
    }
 
    /**
@@ -39,14 +41,14 @@ trait Rules
     */
    public function getCustomMessages()
    {
-      if (!is_array($this->customMessages)):
+       if (!is_array($this->customMessages)):
          $manager = App::make('shield');
-         $key     = $this->getRulesKey();
+       $key = $this->getRulesKey();
 
-         $this->customMessages = $manager->getCustomMessages($key);
-      endif;
+       $this->customMessages = $manager->getCustomMessages($key);
+       endif;
 
-      return $this->customMessages;
+       return $this->customMessages;
    }
 
    /**
@@ -54,14 +56,14 @@ trait Rules
     */
    public function getAttributeNames()
    {
-      if (!is_array($this->attributesNames)):
+       if (!is_array($this->attributesNames)):
          $manager = App::make('shield');
-         $key     = $this->getRulesKey();
+       $key = $this->getRulesKey();
 
-         $this->attributesNames = $manager->getAttributeNames($key);
-      endif;
+       $this->attributesNames = $manager->getAttributeNames($key);
+       endif;
 
-      return $this->attributesNames;
+       return $this->attributesNames;
    }
 
    /**
@@ -69,10 +71,10 @@ trait Rules
     */
    protected function getRulesKey()
    {
-      if (isset($this->_rules_key)):
+       if (isset($this->_rules_key)):
          return $this->_rules_key;
-      endif;
+       endif;
 
-      return $this->getTable();
+       return $this->getTable();
    }
 }

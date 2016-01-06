@@ -1,10 +1,11 @@
-<?php namespace Vinicius73\ModelShield;
+<?php
+
+namespace Vinicius73\ModelShield;
 
 use Illuminate\Support\ServiceProvider;
 
 class ModelShieldServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -20,11 +21,11 @@ class ModelShieldServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../resources/config/shield.php', 'shield'
+            __DIR__.'/../resources/config/shield.php', 'shield'
         );
 
         $this->publishes([
-            __DIR__ . '/../resources/config/shield.php' => config_path('shield.php')
+            __DIR__.'/../resources/config/shield.php' => config_path('shield.php'),
         ]);
     }
 
@@ -51,5 +52,4 @@ class ModelShieldServiceProvider extends ServiceProvider
     {
         return ['shield'];
     }
-
 }
