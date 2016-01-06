@@ -1,10 +1,12 @@
-<?php namespace Vinicius73\ModelShield\Traits;
+<?php
+
+namespace Vinicius73\ModelShield\Traits;
 
 use Validator;
 
 trait ShieldValidator
 {
-   /**
+    /**
     * @var \Illuminate\Validation\Validator
     */
    private $validator;
@@ -14,13 +16,13 @@ trait ShieldValidator
     *
     * @return bool
     */
-   public function isValid(array $customRules = array())
+   public function isValid(array $customRules = [])
    {
-      return (boolean)$this->runValidation($customRules);
+       return (boolean) $this->runValidation($customRules);
    }
 
    /**
-    * Validates the model
+    * Validates the model.
     *
     * @param array $customRules
     * @param array $customMessages
@@ -28,25 +30,25 @@ trait ShieldValidator
     *
     * @return bool
     */
-   protected function runValidation(array $customRules = array(), array $customMessages = array(), array $attributeNames = array())
+   protected function runValidation(array $customRules = [], array $customMessages = [], array $attributeNames = [])
    {
-      $rules          = (empty($customRules)) ? $this->getRules() : $customRules;
-      $messages       = (empty($customMessages)) ? $this->getCustomMessages() : $customMessages;
-      $attributeNames = (empty($attributeNames)) ? $this->getAttributeNames() : $attributeNames;
+       $rules = (empty($customRules)) ? $this->getRules() : $customRules;
+       $messages = (empty($customMessages)) ? $this->getCustomMessages() : $customMessages;
+       $attributeNames = (empty($attributeNames)) ? $this->getAttributeNames() : $attributeNames;
 
-      $attributes = $this->prepareAttributes();
+       $attributes = $this->prepareAttributes();
 
-      $this->validator = $this->makeValidator($attributes, $rules, $messages);
+       $this->validator = $this->makeValidator($attributes, $rules, $messages);
 
-      $this->validator->setAttributeNames($attributeNames);
+       $this->validator->setAttributeNames($attributeNames);
 
-      $success = $this->validator->passes();
+       $success = $this->validator->passes();
 
-      if (!$success):
+       if (!$success):
          $this->setErrors($this->validator->errors());
-      endif;
+       endif;
 
-      return $success;
+       return $success;
    }
 
    /**
@@ -57,18 +59,18 @@ trait ShieldValidator
     *
     * @return \Illuminate\Validation\Validator
     */
-   protected function makeValidator(array $attributes, array $rules, array $messages = array(), array $customAttributes = array())
+   protected function makeValidator(array $attributes, array $rules, array $messages = [], array $customAttributes = [])
    {
-      return Validator::make($attributes, $rules, $messages, $customAttributes);
+       return Validator::make($attributes, $rules, $messages, $customAttributes);
    }
 
    /**
-    * Prepare the attributes of the model before being validated
+    * Prepare the attributes of the model before being validated.
     *
     * @return array
     */
    protected function prepareAttributes()
    {
-      return $this->getAttributes();
+       return $this->getAttributes();
    }
 }

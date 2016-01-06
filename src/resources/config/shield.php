@@ -1,5 +1,5 @@
 <?php
 
 return [
-   'path' => app_path('Models/rules')
+   'path' => app_path('Models/rules'),
 ];

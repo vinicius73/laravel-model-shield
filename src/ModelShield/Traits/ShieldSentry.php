@@ -1,24 +1,26 @@
-<?php namespace Vinicius73\ModelShield\Traits;
+<?php
+
+namespace Vinicius73\ModelShield\Traits;
 
 trait ShieldSentry
 {
-   use Rules;
-   use Messages;
-   use ShieldValidator;
+    use Rules;
+    use Messages;
+    use ShieldValidator;
 
    /**
     * @param array $options
     *
     * @return bool
     */
-   public function save(array $options = array())
+   public function save(array $options = [])
    {
-      $isValid = $this->isValid();
+       $isValid = $this->isValid();
 
-      if ($isValid):
+       if ($isValid):
          return parent::save($options);
-      endif;
+       endif;
 
-      return false;
+       return false;
    }
 }
